@@ -1,0 +1,1 @@
+alerGame.init()
