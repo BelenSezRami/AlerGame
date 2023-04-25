@@ -100,21 +100,14 @@ class Player {
 
         }
 
+        //Esto comprueba que si el jugador esta por debajo del canvas y lo coloca en el suelo (pero no de las plataformas)
+        if(this.playerSpecs.pos.y + this.playerSpecs.size.h > this.canvasSize.h){
+            this.playerSpecs.pos.y = this.canvasSize.h - this.playerSpecs.size.h
+            this.playerSpecs.vel.y = 0
+        }
+
     }
     jump() {
-        // // console.log('ANTES DE SALTAR',this.isJumping, this.playerSpecs.pos.y )
-        // if(this.playerSpecs.pos.y < this.canvasSize.h / 1.05 - this.playerSpecs.size.h) {
-        //     this.playerSpecs.pos.y += 10
-        //     this.isJumping = true
-        //     // console.log("SALTANDO", this.isJumping, this.playerSpecs.pos.y);
-        // }
-        // // this.isJumping = false
-        // // console.log("Final", this.isJumping, this.playerSpecs.pos.y);
-        // if (Math.floor(this.playerSpecs.pos.y) == Math.floor(this.canvasSize.h / 1.05 - this.playerSpecs.size.h)){
-
-        //     this.isJumping = false
-        // }
-        console.log('jumping')
         this.playerSpecs.vel.y = -10
     }
 }
