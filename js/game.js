@@ -41,6 +41,7 @@ const alerGame = {
     start() {
         setInterval(() => {
             this.clearAll()
+            this.clearBullets()
             this.drawAll()
             this.frameIndex++
             this.collision()
@@ -62,17 +63,17 @@ const alerGame = {
     createPlatforms() {
         this.platforms.push(
         // Ground Floor
-           new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 1.05, this.canvasSize.w, this.canvasSize.h / 11),
+           new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 1.05, this.canvasSize.w, 80),
         // First Floor
-           new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 4, this.canvasSize.h / 1.47, this.canvasSize.w / 2, this.canvasSize.h / 11),
+           new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 4, this.canvasSize.h / 1.47, this.canvasSize.w / 2, 80),
         // Second Floor Left
-           new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 2.1, this.canvasSize.w / 7, this.canvasSize.h / 11),
+           new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 2.1, this.canvasSize.w / 7, 80),
         // Island in the Middle
-           new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 2.7, this.canvasSize.h / 2.8, this.canvasSize.w / 7, this.canvasSize.h / 11),
+           new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 2.7, this.canvasSize.h / 2.8, this.canvasSize.w / 7, 80),
         // Second Floor Right
-           new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 1.5, this.canvasSize.h / 4, this.canvasSize.w / 3, this.canvasSize.h / 11),
+           new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 1.5, this.canvasSize.h / 4, this.canvasSize.w / 3, 80),
         // Third Floor Left
-           new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 8, this.canvasSize.w - 1200, this.canvasSize.h / 11),
+           new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 8, this.canvasSize.w - 1200, 80),
         )
     },
     drawPlatforms() {
@@ -96,6 +97,8 @@ const alerGame = {
             new Bullets(this.ctx, this.canvasSize.w / 4.8, this.canvasSize.h / 1.7, this.canvasSize.w / 15, this.canvasSize.h / 11, 10),
             new Bullets(this.ctx, this.canvasSize.w / 1.17, this.canvasSize.h / 6, this.canvasSize.w / 15, this.canvasSize.h / 11, (-10)),
         )
+        console.log(this.bullets)
+
     },
     drawBullets() {
         this.bullets.forEach(eachBullet => {
@@ -106,10 +109,10 @@ const alerGame = {
         }
     },
     clearBullets() {
-        this.bullets.filter((eachBullet) => {
+        this.bullets = this.bullets.filter((eachBullet) => {
             return eachBullet.bulletSpecs.pos.x < this.canvasSize.w
         })
-        this.bullets.filter((eachBullet) => {
+        this.bullets = this.bullets.filter((eachBullet) => {
             return eachBullet.bulletSpecs.pos.x > 0
         })
     },
@@ -124,33 +127,32 @@ const alerGame = {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
     collision() {
-    //   //PLATFORM COLLISION
+    // //   //PLATFORM COLLISION
 
-      if (this.player.playerSpecs.vel.y !== 0 ) {
-        this.isJumping = true;
-        this.platforms.forEach((eachPlatform) => {
-          console.log(this.player.playerSpecs.pos.y, this.isJumping);
-          if (this.player.playerSpecs.pos.y + this.player.playerSpecs.size.h <= eachPlatform.platformSpecs.pos.y && this.player.isJumping ) {
-            console.log("dentro");
-            this.player.playerSpecs.pos.y = eachPlatform.platformSpecs.pos.y - this.player.playerSpecs.size.h;
-            console.log(this.player.playerSpecs.pos.y);
-            this.player.gravity = 0;
-            this.player.isJumping = false;
-          }
-          // console.log("123123123123123", eachPlatform.platformSpecs.pos.y);
-        });
-      }
-    // for (let i = 0; i < this.platforms.length; i++) {
-    //         const plat = this.platforms[i]
-    //         if (this.player.playerSpecs.pos.x < platformSpecs.pos.x + plat.platformSpecs.size.w &&
-    //             this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > plat.platformSpecs.pos.x &&
-    //             this.player.playerSpecs.pos.y < platformSpecs.pos.y + plat.platformSpecs.size.h &&
-    //             this.player.playerSpecs.size.h + this.player.playerSpecs.pos.y > plat.platformSpecs.pos.y) {
+    //   if (this.player.playerSpecs.vel.y !== 0 ) {
+    //     this.isJumping = true;
+    //     this.platforms.forEach((eachPlatform) => {
+    //       console.log(this.player.playerSpecs.pos.y, this.isJumping);
+    //       if (this.player.playerSpecs.pos.y + this.player.playerSpecs.size.h <= eachPlatform.platformSpecs.pos.y && this.player.isJumping ) {
+    //         console.log("dentro");
+    //         this.player.playerSpecs.pos.y = eachPlatform.platformSpecs.pos.y - this.player.playerSpecs.size.h;
+    //         console.log(this.player.playerSpecs.pos.y);
+    //         this.player.gravity = 0;
+    //         this.player.isJumping = false;
+    //       }
+    //       // console.log("123123123123123", eachPlatform.platformSpecs.pos.y);
+    //     });
+    //   }
+    for (let i = 0; i < this.platforms.length; i++) {
+            if (this.player.playerSpecs.pos.x < this.platforms[i].platformSpecs.pos.x + this.platforms[i].platformSpecs.size.w &&
+                this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > this.platforms[i].platformSpecs.pos.x &&
+                this.player.playerSpecs.pos.y < this.platforms[i].platformSpecs.pos.y + this.platforms[i].platformSpecs.size.h - 160 &&
+                this.player.playerSpecs.size.h + this.player.playerSpecs.pos.y > this.platforms[i].platformSpecs.pos.y) {
                 
-    //             this.player.playerSpecs.vel.y = 0
-    //             this.player.playerSpecs.pos.y = plat.platformSpecs.pos.y - this.player.playerSpecs.size.h
-    //         }
-    //     }
+                this.player.playerSpecs.vel.y = 0
+                this.player.playerSpecs.pos.y = this.platforms[i].platformSpecs.pos.y - this.player.playerSpecs.size.h
+            }
+        }
         
 
       //BULLET COLLISION

@@ -81,7 +81,7 @@ class Player {
             this.playerSpecs.pos.x += this.playerSpecs.vel.x;
 
             
-            if(this.playerSpecs.pos.x + this.playerSpecs.size.w > this.canvasSize.w ){
+            if(this.playerSpecs.pos.x + this.playerSpecs.size.w > this.canvasSize.w){
                 this.playerSpecs.vel.x *= -1
             }else{
                 this.playerSpecs.vel.x = 5;
@@ -97,9 +97,17 @@ class Player {
             }else{
                 this.playerSpecs.vel.x = 5
             }
-
         }
+        // else if (this.key.ArrowUp.pressed === true) {
+            
+        //     if(this.playerSpecs.pos.y = 0 ){
+        //         this.playerSpecs.vel.y *= 1;
+        //     }else{
+        //         this.playerSpecs.vel.y= -10
+        //     }
 
+
+        // }
         //Esto comprueba que si el jugador esta por debajo del canvas y lo coloca en el suelo (pero no de las plataformas)
         if(this.playerSpecs.pos.y + this.playerSpecs.size.h > this.canvasSize.h){
             this.playerSpecs.pos.y = this.canvasSize.h - this.playerSpecs.size.h
@@ -109,5 +117,11 @@ class Player {
     }
     jump() {
         this.playerSpecs.vel.y = -10
+        
+        if(this.playerSpecs.pos.y <= 0 ){
+            this.playerSpecs.vel.y *= -1;
+        }else{
+            this.playerSpecs.vel.y= -10
+        }
     }
 }
