@@ -1,6 +1,6 @@
 class Player {
 
-    constructor(ctx, canvasSize, playerPosX, playerPosY, playerW, playerH, playerVelX, playerVelY, isJumping) {
+    constructor(ctx, canvasSize, playerPosX, playerPosY, playerW, playerH, playerVelX, playerVelY) {
         this.ctx = ctx
         this.playerSpecs = {
             pos: { x: playerPosX, y: playerPosY },
@@ -123,5 +123,7 @@ class Player {
         }else{
             this.playerSpecs.vel.y= -10
         }
+
+        // ESTO HACE QUE SOLO PUEDA SALTAR 3 VECES :)
     }
 }

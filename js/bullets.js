@@ -1,6 +1,6 @@
 class Bullets {
 
-  constructor(ctx, enemiePosX, enemiePosY, enemieW, enemieH, bulletSpeedX) {
+  constructor(ctx, enemiePosX, enemiePosY, enemieW, enemieH, bulletW, bulletH, bulletSpeedX) {
 
     this.ctx = ctx;
 
@@ -11,6 +11,7 @@ class Bullets {
 
     this.bulletSpecs = {
       pos: { x: enemiePosX + enemieW, y: enemiePosY + enemieH / 2 },
+      size: { w: bulletW, h: bulletH },
       speed: bulletSpeedX
     }
   }
@@ -23,5 +24,4 @@ class Bullets {
   move() {
     this.bulletSpecs.pos.x += this.bulletSpecs.speed
   }
-
 }

@@ -15,8 +15,10 @@ const alerGame = {
     platforms: [],
     enemies: [],
     bullets: [],
+    pills: [],
     frameIndex: 0,
     isJumping: false,
+    count:0,
     
     init() {
         this.setContext()
@@ -26,6 +28,7 @@ const alerGame = {
         this.createPlatforms()
         this.createEnemies()
         this.createPlayer()
+        this.createPills()
     },
     setContext() {
         this.ctx = document.querySelector('canvas').getContext('2d')
@@ -41,10 +44,16 @@ const alerGame = {
     start() {
         setInterval(() => {
             this.clearAll()
+            if (this.frameIndex % 100 === 0) {
+                this.createBullets()
+            }   
             this.clearBullets()
             this.drawAll()
             this.frameIndex++
-            this.collision()
+            this.platformCollision()
+            this.bulletCollision()
+            this.pillCollision()
+            this.enemieCollision()
  
         }, 1000 / this.FPS)
     },
@@ -70,7 +79,7 @@ const alerGame = {
            new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 2.1, this.canvasSize.w / 7, 80),
         // Island in the Middle
            new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 2.7, this.canvasSize.h / 2.8, this.canvasSize.w / 7, 80),
-        // Second Floor Right
+        // Third Floor Right
            new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 1.5, this.canvasSize.h / 4, this.canvasSize.w / 3, 80),
         // Third Floor Left
            new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 8, this.canvasSize.w - 1200, 80),
@@ -84,7 +93,7 @@ const alerGame = {
     createEnemies() {
         this.enemies.push(
             new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 3.8, this.canvasSize.h / 1.7, 60, 60),
-            new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 1.1, this.canvasSize.h / 6, 60, 60),
+            new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 1.2, this.canvasSize.h / 6, 60, 60),
         )
     },
     drawEnemies() {
@@ -94,8 +103,8 @@ const alerGame = {
     },
     createBullets() {
         this.bullets.push(
-            new Bullets(this.ctx, this.canvasSize.w / 4.8, this.canvasSize.h / 1.7, this.canvasSize.w / 15, this.canvasSize.h / 11, 10),
-            new Bullets(this.ctx, this.canvasSize.w / 1.17, this.canvasSize.h / 6, this.canvasSize.w / 15, this.canvasSize.h / 11, (-10)),
+            new Bullets(this.ctx, this.canvasSize.w / 4.8, this.canvasSize.h / 1.7, this.canvasSize.w / 15, this.canvasSize.h / 11, 10, 10, 10),
+            new Bullets(this.ctx, this.canvasSize.w / 1.3, this.canvasSize.h / 6, this.canvasSize.w / 15, this.canvasSize.h / 11, 10, 10, (-10)),
         )
         console.log(this.bullets)
 
@@ -104,9 +113,6 @@ const alerGame = {
         this.bullets.forEach(eachBullet => {
             eachBullet.draw()
         })
-        if (this.frameIndex % 100 === 0) {
-            this.createBullets()
-        }
     },
     clearBullets() {
         this.bullets = this.bullets.filter((eachBullet) => {
@@ -116,50 +122,136 @@ const alerGame = {
             return eachBullet.bulletSpecs.pos.x > 0
         })
     },
+    createPills() {
+        this.pills.push(
+            // Ground Floor
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 2, this.canvasSize.h / 1.15, 35, 35),
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 1.5, this.canvasSize.h / 1.15, 35, 35),
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 1.1, this.canvasSize.h / 1.15, 35, 35),
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 3.4, this.canvasSize.h / 1.15, 35, 35),
+
+            // First Floor
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 2.8, this.canvasSize.h / 1.65, 35, 35),
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 1.7, this.canvasSize.h / 1.65, 35, 35),
+
+            // Second Floor Left
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 20, this.canvasSize.h / 2.5, 35, 35),
+
+            // Island in the Middle
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 2.3, this.canvasSize.h / 3.6, 35, 35),
+
+            // Third Floor Right
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 1.09, this.canvasSize.h / 6, 35, 35),
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 1.4, this.canvasSize.h / 6, 35, 35),
+
+            // Third Floor Right
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 4, this.canvasSize.h / 20, 35, 35),
+
+            //Flying
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 1.15, this.canvasSize.h / 2.25, 35, 35),
+            new Pills(this.ctx, this.canvasSize, this.canvasSize.w / 6, this.canvasSize.h / 1.65, 35, 35),
+
+        )
+    },
+    drawPills() {
+        this.pills.forEach((eachPill) => {
+            eachPill.draw()
+        })
+    },
     drawAll() {
         this.drawBackground()
         this.drawPlatforms()
         this.drawEnemies()
         this.drawBullets()
         this.drawPlayer()
+        this.drawPills()
     },
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
-    collision() {
-    // //   //PLATFORM COLLISION
-
-    //   if (this.player.playerSpecs.vel.y !== 0 ) {
-    //     this.isJumping = true;
-    //     this.platforms.forEach((eachPlatform) => {
-    //       console.log(this.player.playerSpecs.pos.y, this.isJumping);
-    //       if (this.player.playerSpecs.pos.y + this.player.playerSpecs.size.h <= eachPlatform.platformSpecs.pos.y && this.player.isJumping ) {
-    //         console.log("dentro");
-    //         this.player.playerSpecs.pos.y = eachPlatform.platformSpecs.pos.y - this.player.playerSpecs.size.h;
-    //         console.log(this.player.playerSpecs.pos.y);
-    //         this.player.gravity = 0;
-    //         this.player.isJumping = false;
-    //       }
-    //       // console.log("123123123123123", eachPlatform.platformSpecs.pos.y);
-    //     });
-    //   }
+    platformCollision() {
     for (let i = 0; i < this.platforms.length; i++) {
             if (this.player.playerSpecs.pos.x < this.platforms[i].platformSpecs.pos.x + this.platforms[i].platformSpecs.size.w &&
                 this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > this.platforms[i].platformSpecs.pos.x &&
-                this.player.playerSpecs.pos.y < this.platforms[i].platformSpecs.pos.y + this.platforms[i].platformSpecs.size.h - 160 &&
-                this.player.playerSpecs.size.h + this.player.playerSpecs.pos.y > this.platforms[i].platformSpecs.pos.y) {
-                
+                this.player.playerSpecs.pos.y - this.player.playerSpecs.size.h < this.platforms[i].platformSpecs.pos.y - this.platforms[i].platformSpecs.size.h &&
+                this.player.playerSpecs.size.h + this.player.playerSpecs.pos.y > this.platforms[i].platformSpecs.pos.y ) {
+
+                    // pte colision cabeza-culo plataforma
+             
                 this.player.playerSpecs.vel.y = 0
                 this.player.playerSpecs.pos.y = this.platforms[i].platformSpecs.pos.y - this.player.playerSpecs.size.h
             }
         }
+    },
+    bulletCollision() {
         
+        this.bullets.forEach((eachBullet, i) => {
 
-      //BULLET COLLISION
+            if (
+                // eje x
+                this.player.playerSpecs.pos.x <= eachBullet.bulletSpecs.pos.x + eachBullet.bulletSpecs.size.w &&
+                this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > eachBullet.bulletSpecs.pos.x &&
 
+                // eje y
+                this.player.playerSpecs.pos.y < eachBullet.bulletSpecs.pos.y + eachBullet.bulletSpecs.size.h &&
+                this.player.playerSpecs.pos.y + this.player.playerSpecs.size.h > eachBullet.bulletSpecs.pos.y
+            ) {
+                this.count++
+                console.log(this.count)
+                if(this.count ===1)document.getElementById('heart1').style.visibility = 'hidden'
+                if(this.count ===2)document.getElementById('heart2').style.visibility = 'hidden'
+                if(this.count ===3)document.getElementById('heart3').style.visibility = 'hidden'
 
-      // COIN COLLISION
+                if(this.count ===3)document.getElementById('gameover').style.visibility = 'visible'
 
-      
+                // filter para que la bala no atraviese
+                this.bullets = this.bullets.filter(b => b !== this.bullets[i])
+                
+                
+            }
+        })
+    },
+    pillCollision(){
+        this.pills.forEach((eachPill, i) => {
+
+            if (
+                // eje x
+                this.player.playerSpecs.pos.x <= eachPill.pillSpecs.pos.x + eachPill.pillSpecs.size.w &&
+                this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > eachPill.pillSpecs.pos.x &&
+
+                // eje y
+                this.player.playerSpecs.pos.y < eachPill.pillSpecs.pos.y + eachPill.pillSpecs.size.h &&
+                this.player.playerSpecs.pos.y + this.player.playerSpecs.size.h > eachPill.pillSpecs.pos.y
+            ) {
+                // filter para que jale tosti
+                this.pills = this.pills.filter(p => p !== this.pills[i])
+            }
+        })
+
+    },
+    enemieCollision(){
+
+        // CHEQUEA COLISION ok, IF COLISION -> MUELTE
+
+        this.enemies.forEach((eachEnemie, i) => {
+
+            if (
+                // eje x
+                this.player.playerSpecs.pos.x <= eachEnemie.enemieSpecs.pos.x + eachEnemie.enemieSpecs.size.w &&
+                this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > eachEnemie.enemieSpecs.pos.x &&
+
+                // eje y
+                this.player.playerSpecs.pos.y < eachEnemie.enemieSpecs.pos.y + eachEnemie.enemieSpecs.size.h &&
+                this.player.playerSpecs.pos.y + this.player.playerSpecs.size.h > eachEnemie.enemieSpecs.pos.y
+            ) {
+            this.count = 3
+               document.getElementById('heart1').style.visibility = 'hidden'
+               document.getElementById('heart2').style.visibility = 'hidden'
+               document.getElementById('heart3').style.visibility = 'hidden'
+               if(this.count ===3)document.getElementById('gameover').style.visibility = 'visible'
+            }
+        })
+
     }
+
 }    

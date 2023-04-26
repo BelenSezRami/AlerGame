@@ -2,3 +2,36 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.heart-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+
+}
+.empty-heart-container {
+    position: relative;
+}
+.full-heart-container {
+    position: absolute;
+    top: 1em;
+}
+
+.empty-heart-container img {
+    width: 100px;
+    visibility: visible;
+}
+.full-heart-container img {
+    width: 100px;
+    visibility: visible;
+}
+.gameover{
+    display: flex;
+    align-self: center;
+    position: absolute;
+    /* top: 50px;
+    left: 400px; */
+    width: 100px;
+    visibility: hidden;
+}

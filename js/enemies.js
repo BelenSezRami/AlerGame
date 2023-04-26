@@ -2,25 +2,25 @@ class Enemie {
 
     constructor(ctx, canvasSize, enemiePosX, enemiePosY, enemieW, enemieH) {
         this.ctx = ctx
-        this.playerSpecs = {
+        this.enemieSpecs = {
             pos: { x: enemiePosX, y: enemiePosY },
             size: { w: enemieW, h: enemieH },
         }
         this.canvasSize = canvasSize
-        this.playerImage = undefined
+        this.enemieImage = undefined
         this.init()
     }
     init() {
-        this.playerImage = new Image()
-        this.playerImage.src = "./img/wachosky.png"
+        this.enemieImage = new Image()
+        this.enemieImage.src = "./img/wachosky.png"
     }
     draw() {
         this.ctx.drawImage(
-            this.playerImage,
-            this.playerSpecs.pos.x,
-            this.playerSpecs.pos.y,
-            this.playerSpecs.size.w,
-            this.playerSpecs.size.h
+            this.enemieImage,
+            this.enemieSpecs.pos.x,
+            this.enemieSpecs.pos.y,
+            this.enemieSpecs.size.w,
+            this.enemieSpecs.size.h
         )
     }
 }
