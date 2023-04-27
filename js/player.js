@@ -44,7 +44,7 @@ class Player {
         this.playerImage.frames=3
         this.playerImage.framesIndex=0
 
-
+console.log(this.playerImage.frames)
         this.setEventListeners()
     }
     draw(frameIndex) {
@@ -157,6 +157,7 @@ class Player {
                 this.isMoving = true
                 this.isMovingUp = true
                 this.jump()
+                this.sneeze()
                 break
             } 
         })
@@ -235,5 +236,11 @@ class Player {
         }
 
         // ESTO HACE QUE SOLO PUEDA SALTAR 3 VECES :)
+    }
+    sneeze() {
+        this.sneezeSound = new Audio()
+        this.sneezeSound.src = "./audio/Male Sneeze.mp3"
+        this.sneezeSound.volume = 1
+        this.sneezeSound.play()
     }
 }

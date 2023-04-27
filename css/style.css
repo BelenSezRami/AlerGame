@@ -14,12 +14,12 @@ body {
     position: relative;
 }
 .puerta-abierta img {
-    width: 80px;
+    width: 100px;
     visibility: visible;
     left: 0;
 }
 .puerta-cerrada img {
-    width: 80px;
+    width: 100px;
     visibility: visible;
     left: 0;
 }
@@ -45,11 +45,11 @@ body {
     visibility: visible;
 }
 .gameover{
-    /* display: flex;
-    align-self: center; */
     position: absolute;
-    top: 50px;
-    left: 400px;
-    width: 100px;
     visibility: hidden;
+    width: 100%;
+}
+.gameover img {
+    width: 100%;
+    display: block;
 }
