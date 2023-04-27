@@ -47,9 +47,12 @@ body {
 .gameover{
     position: absolute;
     visibility: hidden;
-    width: 100%;
+
 }
 .gameover img {
-    width: 100%;
-    display: block;
+    position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
 }

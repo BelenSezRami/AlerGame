@@ -39,8 +39,8 @@ const alerGame = {
     },
     setDimensions() {
         this.canvasSize = {
-            w: innerWidth,
-            h: innerHeight
+            w: innerWidth -4,
+            h: innerHeight -4
         }
         document.querySelector('canvas').setAttribute('width', this.canvasSize.w)
         document.querySelector('canvas').setAttribute('height', this.canvasSize.h)
@@ -271,8 +271,7 @@ const alerGame = {
     doorCollision(){
         if(this.pillCounter === 13)document.getElementById('closedDoor').style.visibility = 'hidden'
 
-        if(
-        // eje x
+        if(// eje x
         this.player.playerSpecs.pos.x <= this.door.doorSpecs.pos.x + this.door.doorSpecs.size.w &&
         this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > this.door.doorSpecs.pos.x &&
 
@@ -280,6 +279,7 @@ const alerGame = {
         this.player.playerSpecs.pos.y < this.door.doorSpecs.pos.y + this.door.doorSpecs.size.h &&
         this.player.playerSpecs.pos.y + this.player.playerSpecs.size.h > this.door.doorSpecs.pos.y) { 
             
+            document.getElementById('heart1').style.visibility = 'hidden'
 
         }
         

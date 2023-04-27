@@ -41,10 +41,9 @@ class Player {
         this.playerImage3 = new Image()
         this.playerImage3.src = "./img/adventurer_jump.png"
         //sprite
-        this.playerImage.frames=3
-        this.playerImage.framesIndex=0
+        this.playerImage.frames = 3
+        this.playerImage.framesIndex = 0
 
-console.log(this.playerImage.frames)
         this.setEventListeners()
     }
     draw(frameIndex) {
@@ -60,6 +59,8 @@ console.log(this.playerImage.frames)
             this.playerSpecs.size.w,
             this.playerSpecs.size.h,
             )
+            this.animate(frameIndex)
+
         }
         if(this.isMoving && this.isMovingLeft){
             this.ctx.drawImage(
@@ -73,6 +74,8 @@ console.log(this.playerImage.frames)
             this.playerSpecs.size.w,
             this.playerSpecs.size.h,
             )
+            this.animate(frameIndex)
+
         }
         if(this.isMoving && this.isMovingUp){
             this.ctx.drawImage(
@@ -86,6 +89,7 @@ console.log(this.playerImage.frames)
             this.playerSpecs.size.w,
             this.playerSpecs.size.h,
             )
+            this.animate(frameIndex)
         }
         if(!this.isMoving){
             this.ctx.drawImage(
@@ -101,42 +105,42 @@ console.log(this.playerImage.frames)
             )
         }
         
-        if (this.isMoving && this.isMovingRight)this.animateRight(frameIndex)
-        if (this.isMoving && this.isMovingLeft)this.animateLeft(frameIndex)
-        //     
+        // if (this.isMoving && this.isMovingRight)this.animateRight(frameIndex)
+        // if (this.isMoving && this.isMovingLeft)this.animateLeft(frameIndex)
+        // //     
 
         this.move()
     }
-    animateRight(frameIndex){
+    animate(frameIndex){
         if(frameIndex % 3 === 0){
             this.playerImage.framesIndex++
         }
         if(this.playerImage.framesIndex >= this.playerImage.frames){
-            this.playerImage.framesIndex=0
+            this.playerImage.framesIndex = 0
         }
         
         
     }
-    animateLeft(frameIndex){
-        if(frameIndex % 3 === 0){
-            this.playerImage.framesIndex++
-        }
-        if(this.playerImage.framesIndex >= this.playerImage.frames){
-            this.playerImage.framesIndex=0
-        }
+    // animateLeft(frameIndex){
+    //     if(frameIndex % 3 === 0){
+    //         this.playerImage.framesIndex++
+    //     }
+    //     if(this.playerImage.framesIndex >= this.playerImage.frames){
+    //         this.playerImage.framesIndex=0
+    //     }
         
         
-    }
-    animateUp(frameIndex){
-        if(frameIndex % 3 === 0){
-            this.playerImage.framesIndex++
-        }
-        if(this.playerImage.framesIndex >= this.playerImage.frames){
-            this.playerImage.framesIndex=0
-        }
+    // }
+    // animateUp(frameIndex){
+    //     if(frameIndex % 3 === 0){
+    //         this.playerImage.framesIndex++
+    //     }
+    //     if(this.playerImage.framesIndex >= this.playerImage.frames){
+    //         this.playerImage.framesIndex=0
+    //     }
         
         
-    }
+    // }
     setEventListeners() {
         addEventListener('keydown', (event) => {
             switch (event.key) {
@@ -209,16 +213,7 @@ console.log(this.playerImage.frames)
                 this.playerSpecs.vel.x = 5
             }
         }
-        // else if (this.key.ArrowUp.pressed === true) {
-            
-        //     if(this.playerSpecs.pos.y = 0 ){
-        //         this.playerSpecs.vel.y *= 1;
-        //     }else{
-        //         this.playerSpecs.vel.y= -10
-        //     }
-
-
-        // }
+        
         //Esto comprueba que si el jugador esta por debajo del canvas y lo coloca en el suelo (pero no de las plataformas)
         if(this.playerSpecs.pos.y + this.playerSpecs.size.h > this.canvasSize.h){
             this.playerSpecs.pos.y = this.canvasSize.h - this.playerSpecs.size.h
@@ -235,7 +230,9 @@ console.log(this.playerImage.frames)
             this.playerSpecs.vel.y= -10
         }
 
-        // ESTO HACE QUE SOLO PUEDA SALTAR 3 VECES :)
+        ////////////////////////////////////////////////
+        // ESTO HACE QUE SOLO PUEDA SALTAR 3 VECES :) //
+        ////////////////////////////////////////////////
     }
     sneeze() {
         this.sneezeSound = new Audio()
