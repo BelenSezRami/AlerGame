@@ -18,7 +18,7 @@ class Bullets {
   draw() {
     this.move()
     
-    this.ctx.fillStyle = "black";
+    this.ctx.fillStyle = "orange";
     this.ctx.fillRect(this.bulletSpecs.pos.x, this.bulletSpecs.pos.y, 10, 10)
   }
   move() {

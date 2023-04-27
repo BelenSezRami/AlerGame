@@ -7,7 +7,7 @@ class Pills {
             size: { w: pillW, h: pillH },
         }
         this.canvasSize = canvasSize
-        this.playerImage = undefined
+        this.pillImage = undefined
         this.init()
     }
     init() {

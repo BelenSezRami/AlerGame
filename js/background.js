@@ -13,7 +13,7 @@ class Background {
     }
     init() {
         this.backgroundImage = new Image()
-        this.backgroundImage.src = "./img/forest4.jpg"
+        this.backgroundImage.src = "./img/forest48.png"
     }
     draw() {
         this.ctx.drawImage(

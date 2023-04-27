@@ -18,7 +18,7 @@ const alerGame = {
     pills: [],
     frameIndex: 0,
     isJumping: false,
-    count:0,
+    count: 0,
     
     init() {
         this.setContext()
@@ -67,14 +67,15 @@ const alerGame = {
         this.player = new Player(this.ctx, this.canvasSize, 100, (this.canvasSize.h / 1.05) - 100, 70, 100, 5, 5, this.isJumping)    
     },
     drawPlayer() {
-        this.player.draw()
+        this.player.draw(this.frameIndex)
     },
     createPlatforms() {
         this.platforms.push(
         // Ground Floor
            new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 1.05, this.canvasSize.w, 80),
         // First Floor
-           new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 4, this.canvasSize.h / 1.47, this.canvasSize.w / 2, 80),
+           new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 2.008, this.canvasSize.h / 1.47, this.canvasSize.w / 4, 80),
+           new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 4, this.canvasSize.h / 1.47, this.canvasSize.w / 4, 80),
         // Second Floor Left
            new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 2.1, this.canvasSize.w / 7, 80),
         // Island in the Middle
@@ -82,7 +83,8 @@ const alerGame = {
         // Third Floor Right
            new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 1.5, this.canvasSize.h / 4, this.canvasSize.w / 3, 80),
         // Third Floor Left
-           new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 8, this.canvasSize.w - 1200, 80),
+           new Platform(this.ctx, this.canvasSize, this.canvasSize.w / 6, this.canvasSize.h / 8, this.canvasSize.w / 6, 80),
+           new Platform(this.ctx, this.canvasSize, 0, this.canvasSize.h / 8, this.canvasSize.w / 6, 80),
         )
     },
     drawPlatforms() {
@@ -92,8 +94,8 @@ const alerGame = {
     },
     createEnemies() {
         this.enemies.push(
-            new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 3.8, this.canvasSize.h / 1.7, 60, 60),
-            new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 1.2, this.canvasSize.h / 6, 60, 60),
+            new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 3.8, this.canvasSize.h / 1.7, 80, 80),
+            new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 1.2, this.canvasSize.h / 6.3, 80, 80),
         )
     },
     drawEnemies() {
@@ -104,7 +106,7 @@ const alerGame = {
     createBullets() {
         this.bullets.push(
             new Bullets(this.ctx, this.canvasSize.w / 4.8, this.canvasSize.h / 1.7, this.canvasSize.w / 15, this.canvasSize.h / 11, 10, 10, 10),
-            new Bullets(this.ctx, this.canvasSize.w / 1.3, this.canvasSize.h / 6, this.canvasSize.w / 15, this.canvasSize.h / 11, 10, 10, (-10)),
+            new Bullets(this.ctx, this.canvasSize.w / 1.27, this.canvasSize.h / 6, this.canvasSize.w / 15, this.canvasSize.h / 11, 10, 10, (-10)),
         )
         console.log(this.bullets)
 
@@ -173,7 +175,7 @@ const alerGame = {
     for (let i = 0; i < this.platforms.length; i++) {
             if (this.player.playerSpecs.pos.x < this.platforms[i].platformSpecs.pos.x + this.platforms[i].platformSpecs.size.w &&
                 this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > this.platforms[i].platformSpecs.pos.x &&
-                this.player.playerSpecs.pos.y - this.player.playerSpecs.size.h < this.platforms[i].platformSpecs.pos.y - this.platforms[i].platformSpecs.size.h &&
+                this.player.playerSpecs.pos.y - this.player.playerSpecs.size.h < this.platforms[i].platformSpecs.pos.y - this.platforms[i].platformSpecs.size.h - 100 &&
                 this.player.playerSpecs.size.h + this.player.playerSpecs.pos.y > this.platforms[i].platformSpecs.pos.y ) {
 
                     // pte colision cabeza-culo plataforma
@@ -248,7 +250,7 @@ const alerGame = {
                document.getElementById('heart1').style.visibility = 'hidden'
                document.getElementById('heart2').style.visibility = 'hidden'
                document.getElementById('heart3').style.visibility = 'hidden'
-               if(this.count ===3)document.getElementById('gameover').style.visibility = 'visible'
+               if(this.count === 3)document.getElementById('gameover').style.visibility = 'visible'
             }
         })
 

@@ -11,7 +11,7 @@ class Platform {
     }
     init() {
         this.platformImage = new Image()
-        this.platformImage.src = "./img/platformmain.png"
+        this.platformImage.src = "./img/platform.jpg"
     }
     draw() {
         this.ctx.drawImage(

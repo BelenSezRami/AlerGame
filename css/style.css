@@ -2,13 +2,32 @@ body {
     margin: 0;
     padding: 0;
 }
-
+.door {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.puerta-abierta {
+    position: absolute;
+}
+.puerta-cerrada {
+    position: relative;
+}
+.puerta-abierta img {
+    width: 80px;
+    visibility: visible;
+    left: 0;
+}
+.puerta-cerrada img {
+    width: 80px;
+    visibility: visible;
+    left: 0;
+}
 .heart-container {
     position: absolute;
     top: 0;
     right: 0;
     padding: 1em;
-
 }
 .empty-heart-container {
     position: relative;
@@ -17,7 +36,6 @@ body {
     position: absolute;
     top: 1em;
 }
-
 .empty-heart-container img {
     width: 100px;
     visibility: visible;
@@ -27,11 +45,11 @@ body {
     visibility: visible;
 }
 .gameover{
-    display: flex;
-    align-self: center;
+    /* display: flex;
+    align-self: center; */
     position: absolute;
-    /* top: 50px;
-    left: 400px; */
+    top: 50px;
+    left: 400px;
     width: 100px;
     visibility: hidden;
 }

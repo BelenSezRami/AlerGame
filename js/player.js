@@ -10,6 +10,11 @@ class Player {
         this.canvasSize = canvasSize
         this.gravity = 0.5
         this.playerImage = undefined
+        this.playerImage2 = undefined
+        this.playerImage3 = undefined
+        this.isMovingLeft = false
+        this.isMovingRight = false
+        this.isMovingUp = false
         this.key = {
             ArrowRight: {
                 pressed: false,
@@ -22,6 +27,7 @@ class Player {
             },
 
         },
+
         // this.isJumping = isJumping
         this.init()
 
@@ -29,32 +35,127 @@ class Player {
     
     init() {
         this.playerImage = new Image()
-        this.playerImage.src = "./img/playerboy.png"
+        this.playerImage.src = "./img/adventurer_talk.png"
+        this.playerImage2 = new Image()
+        this.playerImage2.src = "./img/adventurer_walk.png"
+        this.playerImage3 = new Image()
+        this.playerImage3.src = "./img/adventurer_jump.png"
+        //sprite
+        this.playerImage.frames=3
+        this.playerImage.framesIndex=0
+
+
         this.setEventListeners()
     }
-    draw() {
-        this.ctx.drawImage(
+    draw(frameIndex) {
+        if(this.isMoving && this.isMovingRight){
+            this.ctx.drawImage(
             this.playerImage,
+            this.playerImage.width / this.playerImage.frames * this.playerImage.framesIndex,
+            0,
+            this.playerImage.width / this.playerImage.frames,
+            this.playerImage.height,        
             this.playerSpecs.pos.x,
             this.playerSpecs.pos.y,
             this.playerSpecs.size.w,
             this.playerSpecs.size.h,
-        )
+            )
+        }
+        if(this.isMoving && this.isMovingLeft){
+            this.ctx.drawImage(
+            this.playerImage2,
+            this.playerImage2.width / this.playerImage.frames * this.playerImage.framesIndex,
+            0,
+            this.playerImage2.width / this.playerImage.frames,
+            this.playerImage2.height,        
+            this.playerSpecs.pos.x,
+            this.playerSpecs.pos.y,
+            this.playerSpecs.size.w,
+            this.playerSpecs.size.h,
+            )
+        }
+        if(this.isMoving && this.isMovingUp){
+            this.ctx.drawImage(
+            this.playerImage3,
+            this.playerImage3.width / this.playerImage.frames * this.playerImage.framesIndex,
+            0,
+            this.playerImage3.width / this.playerImage.frames,
+            this.playerImage3.height,        
+            this.playerSpecs.pos.x,
+            this.playerSpecs.pos.y,
+            this.playerSpecs.size.w,
+            this.playerSpecs.size.h,
+            )
+        }
+        if(!this.isMoving){
+            this.ctx.drawImage(
+                this.playerImage,
+                this.playerImage.width / this.playerImage.frames * this.playerImage.framesIndex,
+                0,
+                this.playerImage.width / this.playerImage.frames,
+                this.playerImage.height,        
+                this.playerSpecs.pos.x,
+                this.playerSpecs.pos.y,
+                this.playerSpecs.size.w,
+                this.playerSpecs.size.h,
+            )
+        }
+        
+        if (this.isMoving && this.isMovingRight)this.animateRight(frameIndex)
+        if (this.isMoving && this.isMovingLeft)this.animateLeft(frameIndex)
+        //     
+
         this.move()
+    }
+    animateRight(frameIndex){
+        if(frameIndex % 3 === 0){
+            this.playerImage.framesIndex++
+        }
+        if(this.playerImage.framesIndex >= this.playerImage.frames){
+            this.playerImage.framesIndex=0
+        }
+        
+        
+    }
+    animateLeft(frameIndex){
+        if(frameIndex % 3 === 0){
+            this.playerImage.framesIndex++
+        }
+        if(this.playerImage.framesIndex >= this.playerImage.frames){
+            this.playerImage.framesIndex=0
+        }
+        
+        
+    }
+    animateUp(frameIndex){
+        if(frameIndex % 3 === 0){
+            this.playerImage.framesIndex++
+        }
+        if(this.playerImage.framesIndex >= this.playerImage.frames){
+            this.playerImage.framesIndex=0
+        }
+        
+        
     }
     setEventListeners() {
         addEventListener('keydown', (event) => {
             switch (event.key) {
                 case 'ArrowRight': 
-                this.key.ArrowRight.pressed = true 
+                this.key.ArrowRight.pressed = true
+                this.isMoving = true
+                this.isMovingRight = true
                 break
 
                 case 'ArrowLeft': 
-                this.key.ArrowLeft.pressed = true 
+                this.key.ArrowLeft.pressed = true
+                this.isMoving = true
+                this.isMovingLeft = true
                 break
 
                 case 'ArrowUp':
-                this.key.ArrowUp.pressed = true 
+                this.key.ArrowUp.pressed = true
+                this.isMoving = true
+                this.isMovingUp = true
                 this.jump()
                 break
             } 
@@ -62,12 +163,19 @@ class Player {
         addEventListener('keyup', (event) => {
             switch (event.key) {
                 case 'ArrowRight': this.key.ArrowRight.pressed = false
+                this.isMoving = false
+                this.isMovingRight = false
                 break
 
                 case 'ArrowLeft': this.key.ArrowLeft.pressed = false
+                this.isMoving = false
+                this.isMovingLeft = false
                 break
 
                 case 'ArrowUp' : this.key.ArrowUp.pressed = false
+                this.isMoving = false
+                this.isMovingUp = false
+
             }
         })
         
@@ -78,6 +186,7 @@ class Player {
         this.playerSpecs.vel.y += this.gravity
 
         if(this.key.ArrowRight.pressed === true) {
+
             this.playerSpecs.pos.x += this.playerSpecs.vel.x;
 
             
@@ -89,6 +198,7 @@ class Player {
 
         }
         else if (this.key.ArrowLeft.pressed === true) {
+
             this.playerSpecs.pos.x -= this.playerSpecs.vel.x;
 
 
