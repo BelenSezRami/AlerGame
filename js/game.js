@@ -30,9 +30,9 @@ const alerGame = {
         this.createBackground()
         this.createPlatforms()
         this.createEnemies()
-        this.createPlayer()
         this.createPills()
         this.createDoor()
+        this.createPlayer()
     },
     setContext() {
         this.ctx = document.querySelector('canvas').getContext('2d')
@@ -109,7 +109,7 @@ const alerGame = {
         })
     },
     createDoor() {
-        this.door = new Door(this.ctx,this.canvasSize, 0, 0, 100, 112)
+        this.door = new Door(this.ctx,this.canvasSize, 7, 0, 130, 150)
     },
     drawDoor() {
         this.door.draw()
@@ -175,9 +175,9 @@ const alerGame = {
         this.drawPlatforms()
         this.drawEnemies()
         this.drawBullets()
-        this.drawPlayer()
         this.drawPills()
         this.drawDoor()
+        this.drawPlayer()
     },
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
@@ -279,7 +279,7 @@ const alerGame = {
         this.player.playerSpecs.pos.y < this.door.doorSpecs.pos.y + this.door.doorSpecs.size.h &&
         this.player.playerSpecs.pos.y + this.player.playerSpecs.size.h > this.door.doorSpecs.pos.y) { 
             
-            document.getElementById('heart1').style.visibility = 'hidden'
+            document.getElementById('you-win').style.visibility = 'visible'
 
         }
         

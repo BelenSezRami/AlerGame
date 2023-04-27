@@ -19,9 +19,9 @@ body {
     left: 0;
 }
 .puerta-cerrada img {
-    width: 100px;
+    width: 130px;
     visibility: visible;
-    left: 0;
+    left: 30px;
 }
 .heart-container {
     position: absolute;
@@ -47,12 +47,21 @@ body {
 .gameover{
     position: absolute;
     visibility: hidden;
-
 }
 .gameover img {
     position: fixed;
-        left: 0;
-        top: 0;
-        width: 100vw;
-        height: 100vh;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}.you-win {
+    position: absolute;
+    visibility: hidden;
+}
+.you-win img {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
 }

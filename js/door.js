@@ -12,7 +12,7 @@ class Door {
     }
     init() {
         this.doorImage = new Image()
-        this.doorImage.src = "./img/puertaAbierta-removebg-preview.png"
+        this.doorImage.src = "./img/puertaCerrada__1_-removebg-preview-removebg-preview.png"
     }
     draw() {
         this.ctx.drawImage(
