@@ -1,4 +1,4 @@
-const alerGame = {
+const Game = {
     appName: 'AlerGame',
     authors: 'Belen Sanchez y Gustavo Gesto',
     version: '0.0.1',
@@ -33,14 +33,15 @@ const alerGame = {
         this.createPills()
         this.createDoor()
         this.createPlayer()
+        this.playMusic()
     },
     setContext() {
         this.ctx = document.querySelector('canvas').getContext('2d')
     },
     setDimensions() {
         this.canvasSize = {
-            w: innerWidth -4,
-            h: innerHeight -4
+            w: innerWidth -5,
+            h: innerHeight -5 
         }
         document.querySelector('canvas').setAttribute('width', this.canvasSize.w)
         document.querySelector('canvas').setAttribute('height', this.canvasSize.h)
@@ -99,8 +100,8 @@ const alerGame = {
     },
     createEnemies() {
         this.enemies.push(
-            new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 3.8, this.canvasSize.h / 1.75, 70, 70),
-            new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 1.2, this.canvasSize.h / 5.5, 70, 70),
+            new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 3.8, this.canvasSize.h / 1.67, 70, 70),
+            new Enemie(this.ctx, this.canvasSize, this.canvasSize.w / 1.2, this.canvasSize.h / 4.9, 70, 70),
         )
     },
     drawEnemies() {
@@ -109,15 +110,15 @@ const alerGame = {
         })
     },
     createDoor() {
-        this.door = new Door(this.ctx,this.canvasSize, 7, 0, 130, 150)
+        this.door = new Door(this.ctx,this.canvasSize, 7, 0, 100, 118)
     },
     drawDoor() {
         this.door.draw()
     },
     createBullets() {
         this.bullets.push(
-            new Bullets(this.ctx, this.canvasSize.w / 4.8, this.canvasSize.h / 1.7, this.canvasSize.w / 15, this.canvasSize.h / 11, 10, 10, 10),
-            new Bullets(this.ctx, this.canvasSize.w / 1.27, this.canvasSize.h / 6, this.canvasSize.w / 15, this.canvasSize.h / 11, 10, 10, (-10)),
+            new Bullets(this.ctx, this.canvasSize.w / 4.8, this.canvasSize.h / 1.65, this.canvasSize.w / 15, this.canvasSize.h / 11, 10, 10, 10),
+            new Bullets(this.ctx, this.canvasSize.w / 1.27, this.canvasSize.h / 4.7, this.canvasSize.w / 15, this.canvasSize.h / 11, 10, 10, (-10)),
         )
         // console.log(this.bullets)
     },
@@ -186,7 +187,7 @@ const alerGame = {
     for (let i = 0; i < this.platforms.length; i++) {
             if (this.player.playerSpecs.pos.x < this.platforms[i].platformSpecs.pos.x + this.platforms[i].platformSpecs.size.w &&
                 this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > this.platforms[i].platformSpecs.pos.x &&
-                this.player.playerSpecs.pos.y - this.player.playerSpecs.size.h < this.platforms[i].platformSpecs.pos.y - this.platforms[i].platformSpecs.size.h - 85 &&
+                this.player.playerSpecs.pos.y - this.player.playerSpecs.size.h < this.platforms[i].platformSpecs.pos.y - this.platforms[i].platformSpecs.size.h - 80 &&
                 this.player.playerSpecs.size.h + this.player.playerSpecs.pos.y > this.platforms[i].platformSpecs.pos.y ) {
 
                     // pte colision cabeza-culo plataforma
@@ -269,19 +270,20 @@ const alerGame = {
 
     },
     doorCollision(){
-        if(this.pillCounter === 13)document.getElementById('closedDoor').style.visibility = 'hidden'
+        if(this.pillCounter === 13){
+            document.getElementById('closedDoor').style.visibility = 'hidden'
+            if(// eje x
+            this.player.playerSpecs.pos.x <= this.door.doorSpecs.pos.x + this.door.doorSpecs.size.w &&
+            this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > this.door.doorSpecs.pos.x &&
 
-        if(// eje x
-        this.player.playerSpecs.pos.x <= this.door.doorSpecs.pos.x + this.door.doorSpecs.size.w &&
-        this.player.playerSpecs.pos.x + this.player.playerSpecs.size.w > this.door.doorSpecs.pos.x &&
-
-        // eje y
-        this.player.playerSpecs.pos.y < this.door.doorSpecs.pos.y + this.door.doorSpecs.size.h &&
-        this.player.playerSpecs.pos.y + this.player.playerSpecs.size.h > this.door.doorSpecs.pos.y) { 
+            // eje y
+            this.player.playerSpecs.pos.y < this.door.doorSpecs.pos.y + this.door.doorSpecs.size.h &&
+            this.player.playerSpecs.pos.y + this.player.playerSpecs.size.h > this.door.doorSpecs.pos.y) { 
             
-            document.getElementById('you-win').style.visibility = 'visible'
-
+            if( document.getElementById('closedDoor').style.visibility = 'hidden')document.getElementById('you-win').style.visibility = 'visible'
+            
+            } 
         }
-        
     },
+    
 }    

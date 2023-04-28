@@ -240,4 +240,5 @@ class Player {
         this.sneezeSound.volume = 1
         this.sneezeSound.play()
     }
+    
 }
